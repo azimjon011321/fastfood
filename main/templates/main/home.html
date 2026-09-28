@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Foodly 🍔</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif
+}
+
+html{
+    scroll-behavior:smooth
+}
+
+body{
+    background:#f8f8f8;
+    color:#171717
+}
+
+/* NAVBAR */
+nav{
+    height:75px;
+    padding:0 7%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:#fff;
+    position:sticky;
+    top:0;
+    z-index:1000;
+    box-shadow:0 2px 15px #00000010
+}
+
+.logo{
+    font-size:28px;
+    font-weight:900
+}
+
+.logo span{
+    color:#ff4b2b
+}
+
+.nav-links{
+    display:flex;
+    gap:30px;
+    list-style:none
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:#222;
+    font-weight:600
+}
+
+.nav-links a:hover{
+    color:#ff4b2b
+}
+
+.nav-buttons{
+    display:flex;
+    align-items:center;
+    gap:10px
+}
+
+.telegram-btn{
+    text-decoration:none;
+    background:#229ED9;
+    color:white;
+    padding:12px 18px;
+    border-radius:30px;
+    font-weight:bold;
+    transition:.2s
+}
+
+.telegram-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 20px #229ED955
+}
+
+.cart-btn{
+    border:0;
+    background:#ff4b2b;
+    color:white;
+    padding:13px 22px;
+    border-radius:30px;
+    font-weight:bold;
+    cursor:pointer;
+    font-size:15px
+}
+
+/* HERO */
+.hero{
+    min-height:550px;
+    padding:70px 7%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:#fff0ea
+}
+
+.hero-text{
+    max-width:560px
+}
+
+.hero-text small{
+    color:#ff4b2b;
+    font-size:16px;
+    font-weight:bold
+}
+
+.hero-text h1{
+    font-size:62px;
+    line-height:1.05;
+    margin:18px 0
+}
+
+.hero-text h1 span{
+    color:#ff4b2b
+}
+
+.hero-text p{
+    font-size:18px;
+    color:#666;
+    line-height:1.7;
+    margin-bottom:28px
+}
+
+.hero-btn{
+    display:inline-block;
+    background:#ff4b2b;
+    color:#fff;
+    padding:16px 28px;
+    border-radius:30px;
+    text-decoration:none;
+    font-weight:bold
+}
+
+.hero-image img{
+    width:500px;
+    height:500px;
+    object-fit:cover;
+    border-radius:50%;
+    box-shadow:0 25px 60px #ff4b2b30
+}
+
+/* SECTIONS */
+.section{
+    padding:75px 7%
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:40px
+}
+
+.section-title h2{
+    font-size:38px;
+    margin-bottom:10px
+}
+
+.section-title p{
+    color:#777
+}
+
+/* CATEGORIES */
+.categories{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:18px
+}
+
+.category{
+    background:white;
+    padding:25px 10px;
+    border-radius:20px;
+    text-align:center;
+    border:1px solid #eee;
+    cursor:pointer;
+    transition:.25s
+}
+
+.category:hover{
+    transform:translateY(-7px);
+    box-shadow:0 15px 30px #00000010
+}
+
+.category div{
+    font-size:45px;
+    margin-bottom:10px
+}
+
+.category h3{
+    font-size:16px
+}
+
+/* PRODUCTS */
+.products{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:25px
+}
+
+.product{
+    background:white;
+    border-radius:22px;
+    overflow:hidden;
+    border:1px solid #eee;
+    transition:.25s
+}
+
+.product:hover{
+    transform:translateY(-7px);
+    box-shadow:0 18px 40px #00000012
+}
+
+.product img{
+    width:100%;
+    height:210px;
+    object-fit:cover
+}
+
+.product-info{
+    padding:18px
+}
+
+.product-info h3{
+    font-size:20px;
+    margin-bottom:8px
+}
+
+.product-info p{
+    color:#777;
+    font-size:14px;
+    line-height:1.5;
+    min-height:42px
+}
+
+.bottom{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-top:17px
+}
+
+.price{
+    color:#ff4b2b;
+    font-weight:900;
+    font-size:18px
+}
+
+.add{
+    border:0;
+    background:#171717;
+    color:white;
+    padding:10px 15px;
+    border-radius:20px;
+    cursor:pointer;
+    font-weight:bold
+}
+
+.add:hover{
+    background:#ff4b2b
+}
+
+/* ABOUT */
+.about{
+    background:#171717;
+    color:white;
+    text-align:center;
+    padding:70px 7%
+}
+
+.about h2{
+    font-size:38px;
+    margin-bottom:15px
+}
+
+.about p{
+    color:#bbb;
+    max-width:650px;
+    margin:auto;
+    line-height:1.7
+}
+
+.username{
+    margin-top:20px
+}
+
+.username a{
+    color:#ff4b2b;
+    font-weight:bold;
+    text-decoration:none
+}
+
+/* FOOTER */
+footer{
+    text-align:center;
+    padding:30px;
+    background:#111;
+    color:#777
+}
+
+/* CART */
+.cart-panel{
+    position:fixed;
+    right:-430px;
+    top:0;
+    width:400px;
+    max-width:95%;
+    height:100vh;
+    background:white;
+    z-index:2000;
+    box-shadow:-10px 0 40px #0002;
+    transition:.3s;
+    padding:25px;
+    display:flex;
+    flex-direction:column
+}
+
+.cart-panel.open{
+    right:0
+}
+
+.cart-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:1px solid #eee;
+    padding-bottom:18px
+}
+
+.close{
+    border:0;
+    background:#eee;
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    cursor:pointer;
+    font-size:18px
+}
+
+.cart-items{
+    flex:1;
+    overflow:auto;
+    padding:15px 0
+}
+
+.cart-item{
+    display:flex;
+    gap:12px;
+    align-items:center;
+    padding:14px 0;
+    border-bottom:1px solid #eee
+}
+
+.cart-item-info{
+    flex:1
+}
+
+.cart-item-info h4{
+    margin-bottom:5px
+}
+
+.cart-item-info span{
+    color:#ff4b2b;
+    font-weight:bold
+}
+
+.qty{
+    display:flex;
+    gap:7px;
+    align-items:center;
+    margin-top:7px
+}
+
+.qty button{
+    border:0;
+    background:#eee;
+    width:25px;
+    height:25px;
+    border-radius:50%;
+    cursor:pointer
+}
+
+.remove{
+    border:0;
+    background:none;
+    color:#999;
+    cursor:pointer
+}
+
+.cart-bottom{
+    border-top:1px solid #eee;
+    padding-top:18px
+}
+
+.total{
+    display:flex;
+    justify-content:space-between;
+    font-size:21px;
+    font-weight:bold;
+    margin-bottom:15px
+}
+
+.order{
+    width:100%;
+    padding:15px;
+    border:0;
+    background:#ff4b2b;
+    color:white;
+    border-radius:28px;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer
+}
+
+.empty{
+    text-align:center;
+    color:#999;
+    margin-top:60px
+}
+
+/* MOBILE */
+@media(max-width:1100px){
+    .categories{
+        grid-template-columns:repeat(3,1fr)
+    }
+
+    .products{
+        grid-template-columns:repeat(2,1fr)
+    }
+
+    .hero-image img{
+        width:400px;
+        height:400px
+    }
+}
+
+@media(max-width:800px){
+    .telegram-btn{
+        display:none
+    }
+
+    .nav-links{
+        display:none
+    }
+
+    .hero{
+        flex-direction:column;
+        text-align:center
+    }
+
+    .hero-text h1{
+        font-size:45px
+    }
+
+    .hero-image img{
+        width:300px;
+        height:300px;
+        margin-top:40px
+    }
+}
+
+@media(max-width:600px){
+    .categories{
+        grid-template-columns:repeat(2,1fr)
+    }
+
+    .products{
+        grid-template-columns:1fr
+    }
+
+    .logo{
+        font-size:23px
+    }
+
+    .cart-btn{
+        padding:11px 15px
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav>
+
+    <div class="logo">
+        Food<span>ly</span> 🍔
+    </div>
+
+    <ul class="nav-links">
+        <li><a href="#">Bosh sahifa</a></li>
+        <li><a href="#menu">Menyu</a></li>
+        <li><a href="#about">Biz haqimizda</a></li>
+    </ul>
+
+    <div class="nav-buttons">
+
+        <a href="https://t.me/paukjann"
+           target="_blank"
+           class="telegram-btn">
+            💬 Telegram
+        </a>
+
+        <button class="cart-btn" onclick="openCart()">
+            🛒 Savat <span id="cartCount">0</span>
+        </button>
+
+    </div>
+
+</nav>
+
+
+<!-- HERO -->
+<section class="hero">
+
+    <div class="hero-text">
+
+        <small>🔥 BUGUNGI MAXSUS TAKLIF</small>
+
+        <h1>
+            Eng mazali
+            <span>Fast Food</span>
+            shu yerda!
+        </h1>
+
+        <p>
+            Issiq, mazali va sifatli taomlarni
+            tez va oson buyurtma qiling.
+        </p>
+
+        <a href="#menu" class="hero-btn">
+            Menyuni ko‘rish →
+        </a>
+
+    </div>
+
+    <div class="hero-image">
+        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80">
+    </div>
+
+</section>
+
+
+<!-- CATEGORIES -->
+<section class="section">
+
+    <div class="section-title">
+        <h2>🍴 Kategoriyalar</h2>
+        <p>Sevimli taomingizni tanlang</p>
+    </div>
+
+    <div class="categories">
+
+        <div class="category">
+            <div>🍔</div>
+            <h3>Burger</h3>
+        </div>
+
+        <div class="category">
+            <div>🌯</div>
+            <h3>Lavash</h3>
+        </div>
+
+        <div class="category">
+            <div>🥙</div>
+            <h3>Shaurma</h3>
+        </div>
+
+        <div class="category">
+            <div>🍕</div>
+            <h3>Pizza</h3>
+        </div>
+
+        <div class="category">
+            <div>🍟</div>
+            <h3>Fri</h3>
+        </div>
+
+        <div class="category">
+            <div>🥤</div>
+            <h3>Ichimlik</h3>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- MENU -->
+<section class="section" id="menu">
+
+    <div class="section-title">
+        <h2>🔥 Bizning menyu</h2>
+        <p>Eng mazali taomlar</p>
+    </div>
+
+    <div class="products">
+
+        <!-- BURGER -->
+        <div class="product">
+
+            <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80">
+
+            <div class="product-info">
+
+                <h3>Classic Burger</h3>
+
+                <p>
+                    Mol go‘shti, pishloq,
+                    pomidor va maxsus sous.
+                </p>
+
+                <div class="bottom">
+
+                    <span class="price">
+                        35 000 so‘m
+                    </span>
+
+                    <button class="add"
+                        onclick="addToCart('Classic Burger',35000,this)">
+                        + Savat
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- LAVASH -->
+        <div class="product">
+
+            <img src="https://images.unsplash.com/photo-1606756790138-261d2b21cd75?auto=format&fit=crop&w=800&q=80">
+
+            <div class="product-info">
+
+                <h3>Lavash</h3>
+
+                <p>
+                    Tovuq go‘shti, pomidor,
+                    bodring va maxsus sous.
+                </p>
+
+                <div class="bottom">
+
+                    <span class="price">
+                        32 000 so‘m
+                    </span>
+
+                    <button class="add"
+                        onclick="addToCart('Lavash',32000,this)">
+                        + Savat
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- SHAURMA -->
+        <div class="product">
+
+            <img src="https://images.unsplash.com/photo-1529006557810-274b9b2fc783?auto=format&fit=crop&w=800&q=80">
+
+            <div class="product-info">
+
+                <h3>Shaurma</h3>
+
+                <p>
+                    Yumshoq non, tovuq go‘shti
+                    va yangi sabzavotlar.
+                </p>
+
+                <div class="bottom">
+
+                    <span class="price">
+                        30 000 so‘m
+                    </span>
+
+                    <button class="add"
+                        onclick="addToCart('Shaurma',30000,this)">
+                        + Savat
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- PIZZA -->
+        <div class="product">
+
+            <img src="https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=800&q=80">
+
+            <div class="product-info">
+
+                <h3>Pepperoni Pizza</h3>
+
+                <p>
+                    Pepperoni, mozzarella
+                    va pomidor sousi.
+                </p>
+
+                <div class="bottom">
+
+                    <span class="price">
+                        65 000 so‘m
+                    </span>
+
+                    <button class="add"
+                        onclick="addToCart('Pepperoni Pizza',65000,this)">
+                        + Savat
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- FRIES -->
+        <div class="product">
+
+            <img src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=800&q=80">
+
+            <div class="product-info">
+
+                <h3>French Fries</h3>
+
+                <p>
+                    Qarsildoq kartoshka
+                    va ketchup.
+                </p>
+
+                <div class="bottom">
+
+                    <span class="price">
+                        18 000 so‘m
+                    </span>
+
+                    <button class="add"
+                        onclick="addToCart('French Fries',18000,this)">
+                        + Savat
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- HOT DOG -->
+        <div class="product">
+
+            <img src="https://images.unsplash.com/photo-1612392062631-94dd858cba88?auto=format&fit=crop&w=800&q=80">
+
+            <div class="product-info">
+
+                <h3>Hot Dog</h3>
+
+                <p>
+                    Sosiska, ketchup,
+                    mayonez va sabzavotlar.
+                </p>
+
+                <div class="bottom">
+
+                    <span class="price">
+                        25 000 so‘m
+                    </span>
+
+                    <button class="add"
+                        onclick="addToCart('Hot Dog',25000,this)">
+                        + Savat
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- NUGGETS -->
+        <div class="product">
+
+            <img src="https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=800&q=80">
+
+            <div class="product-info">
+
+                <h3>Chicken Nuggets</h3>
+
+                <p>
+                    Qarsildoq tovuq nuggets
+                    va maxsus sous.
+                </p>
+
+                <div class="bottom">
+
+                    <span class="price">
+                        28 000 so‘m
+                    </span>
+
+                    <button class="add"
+                        onclick="addToCart('Chicken Nuggets',28000,this)">
+                        + Savat
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- COLA -->
+        <div class="product">
+
+            <img src="https://images.unsplash.com/photo-1629203849820-fdd70d49c38e?auto=format&fit=crop&w=800&q=80">
+
+            <div class="product-info">
+
+                <h3>Cola</h3>
+
+                <p>
+                    Sovuq va tetiklashtiruvchi
+                    ichimlik.
+                </p>
+
+                <div class="bottom">
+
+                    <span class="price">
+                        10 000 so‘m
+                    </span>
+
+                    <button class="add"
+                        onclick="addToCart('Cola',10000,this)">
+                        + Savat
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ABOUT -->
+<section class="about" id="about">
+
+    <h2>Biz haqimizda 🍔</h2>
+
+    <p>
+        Foodly — mazali fast foodlarni
+        tez va qulay buyurtma qilish
+        uchun yaratilgan zamonaviy
+        fast food platformasi.
+    </p>
+
+    <div class="username">
+
+        📱 Telegram:
+        <a href="https://t.me/paukjann"
+           target="_blank">
+            @paukjann
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+    © 2026 Foodly — Barcha huquqlar himoyalangan.
+</footer>
+
+
+<!-- CART -->
+<div class="cart-panel" id="cartPanel">
+
+    <div class="cart-head">
+
+        <h2>🛒 Savat</h2>
+
+        <button class="close"
+                onclick="closeCart()">
+            ×
+        </button>
+
+    </div>
+
+    <div class="cart-items"
+         id="cartItems">
+    </div>
+
+    <div class="cart-bottom">
+
+        <div class="total">
+
+            <span>Jami:</span>
+
+            <span id="cartTotal">
+                0 so‘m
+            </span>
+
+        </div>
+
+        <button class="order"
+                onclick="orderNow()">
+            Buyurtma berish →
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+let cart = [];
+
+
+function addToCart(name, price, button){
+
+    let existing =
+        cart.find(item => item.name === name);
+
+    if(existing){
+
+        existing.qty++;
+
+    }else{
+
+        cart.push({
+            name:name,
+            price:price,
+            qty:1
+        });
+
+    }
+
+    updateCart();
+
+    button.innerText = "✓ Qo‘shildi";
+
+    setTimeout(() => {
+
+        button.innerText = "+ Savat";
+
+    },700);
+
+}
+
+
+function updateCart(){
+
+    const container =
+        document.getElementById("cartItems");
+
+    const count =
+        document.getElementById("cartCount");
+
+    const totalElement =
+        document.getElementById("cartTotal");
+
+    let totalCount = 0;
+    let totalPrice = 0;
+
+    container.innerHTML = "";
+
+
+    if(cart.length === 0){
+
+        container.innerHTML =
+            '<div class="empty">Savat hozircha bo‘sh 😔</div>';
+
+    }
+
+
+    cart.forEach((item,index) => {
+
+        totalCount += item.qty;
+
+        totalPrice +=
+            item.price * item.qty;
+
+
+        container.innerHTML += `
+
+            <div class="cart-item">
+
+                <div class="cart-item-info">
+
+                    <h4>
+                        ${item.name}
+                    </h4>
+
+                    <span>
+                        ${formatPrice(item.price)} so‘m
+                    </span>
+
+                    <div class="qty">
+
+                        <button
+                            onclick="changeQty(${index},-1)">
+                            −
+                        </button>
+
+                        <b>
+                            ${item.qty}
+                        </b>
+
+                        <button
+                            onclick="changeQty(${index},1)">
+                            +
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <button
+                    class="remove"
+                    onclick="removeItem(${index})">
+                    🗑️
+                </button>
+
+            </div>
+
+        `;
+
+    });
+
+
+    count.innerText =
+        totalCount;
+
+    totalElement.innerText =
+        formatPrice(totalPrice) + " so‘m";
+
+}
+
+
+function changeQty(index,change){
+
+    cart[index].qty += change;
+
+    if(cart[index].qty <= 0){
+
+        cart.splice(index,1);
+
+    }
+
+    updateCart();
+
+}
+
+
+function removeItem(index){
+
+    cart.splice(index,1);
+
+    updateCart();
+
+}
+
+
+function formatPrice(number){
+
+    return number.toLocaleString("uz-UZ");
+
+}
+
+
+function openCart(){
+
+    document
+        .getElementById("cartPanel")
+        .classList.add("open");
+
+}
+
+
+function closeCart(){
+
+    document
+        .getElementById("cartPanel")
+        .classList.remove("open");
+
+}
+function closeCart() {
+    const cartModal = document.getElementById("cartModal");
+    cartModal.classList.remove("open");
+}
+
+/* BUYURTMA BERISH */
+function orderNow() {
+
+    if (cart.length === 0) {
+        alert("Savat bo'sh!");
+        return;
+    }
+
+    /* Savatni checkout sahifasiga saqlaymiz */
+    localStorage.setItem(
+        "foodly_cart",
+        JSON.stringify(cart)
+    );
+
+    /* Checkout sahifasiga o'tamiz */
+    window.location.href = "{% url 'checkout' %}";
+}
+
+</script>

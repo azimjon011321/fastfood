@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Buyurtma berish</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 30px 15px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .order-items {
+            margin-top: 25px;
+            border-top: 1px solid #ddd;
+            padding-top: 15px;
+        }
+
+        .item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: #ff7a00;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        /* ORTGA TUGMASI */
+        .back-btn {
+            background: #eeeeee;
+            color: #333;
+            margin-top: 10px;
+        }
+
+        .back-btn:hover {
+            background: #dddddd;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Buyurtma berish</h1>
+
+    <form id="checkoutForm">
+
+        <div class="form-group">
+            <label for="name">Ismingiz</label>
+            <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Ismingizni kiriting"
+                required
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Telefon raqamingiz</label>
+            <input
+                type="tel"
+                id="phone"
+                name="phone"
+                placeholder="+998 90 123 45 67"
+                required
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="address">Manzil</label>
+            <textarea
+                id="address"
+                name="address"
+                placeholder="Yetkazib berish manzilini kiriting"
+                required
+            ></textarea>
+        </div>
+
+        <div class="order-items">
+            <h2>Sizning buyurtmangiz</h2>
+
+            <div id="cartItems"></div>
+
+            <div class="total">
+                <span>Jami:</span>
+                <span id="total">0 so'm</span>
+            </div>
+        </div>
+
+        <button type="submit">
+            Buyurtmani yuborish
+        </button>
+
+        <!-- ORTGA -->
+        <button
+            type="button"
+            class="back-btn"
+            onclick="history.back()">
+            ← Ortga
+        </button>
+
+    </form>
+
+</div>
+
+<script>
+
+    /* localStorage'dan savatni olamiz */
+    const cart = JSON.parse(
+        localStorage.getItem("foodly_cart")
+    ) || [];
+
+    const cartItems = document.getElementById("cartItems");
+    const totalElement = document.getElementById("total");
+
+
+    /* Savatni chiqarish */
+    function showCart() {
+
+        cartItems.innerHTML = "";
+
+        if (cart.length === 0) {
+
+            cartItems.innerHTML =
+                "<p>Savat bo'sh!</p>";
+
+            return;
+        }
+
+        let total = 0;
+
+        cart.forEach(function(item) {
+
+            const itemTotal =
+                item.price * item.qty;
+
+            total += itemTotal;
+
+            const div = document.createElement("div");
+
+            div.className = "item";
+
+            div.innerHTML = `
+                <span>
+                    ${item.name} × ${item.qty}
+                </span>
+
+                <span>
+                    ${itemTotal.toLocaleString()} so'm
+                </span>
+            `;
+
+            cartItems.appendChild(div);
+        });
+
+        totalElement.textContent =
+            total.toLocaleString() + " so'm";
+    }
+
+
+    /* Buyurtmani yuborish */
+    document
+        .getElementById("checkoutForm")
+        .addEventListener("submit", async function(e) {
+
+            e.preventDefault();
+
+            if (cart.length === 0) {
+
+                alert("Savat bo'sh!");
+
+                return;
+            }
+
+            const name =
+                document.getElementById("name").value;
+
+            const phone =
+                document.getElementById("phone").value;
+
+            const address =
+                document.getElementById("address").value;
+
+            const total = cart.reduce(
+                (sum, item) =>
+                    sum + item.price * item.qty,
+                0
+            );
+
+
+            try {
+
+                const response = await fetch(
+                    "/send-order/",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify({
+
+                            name: name,
+
+                            phone: phone,
+
+                            address: address,
+
+                            items: cart,
+
+                            total: total
+                        })
+                    }
+                );
+
+
+                const data =
+                    await response.json();
+
+
+                if (data.success) {
+
+                    /* Savatni tozalaymiz */
+                    localStorage.removeItem(
+                        "foodly_cart"
+                    );
+
+                    /* Success sahifasiga o'tamiz */
+                    window.location.href =
+                        "{% url 'success' %}";
+
+                } else {
+
+                    alert(
+                        "❌ Xatolik: " +
+                        (data.error || "Noma'lum xatolik")
+                    );
+                }
+
+            } catch (error) {
+
+                console.error(error);
+
+                alert(
+                    "❌ Server bilan aloqa bo'lmadi!"
+                );
+            }
+
+        });
+
+
+    /* Sahifa ochilganda savatni ko'rsatamiz */
+    showCart();
+
+</script>
+
+</body>
+</html>
